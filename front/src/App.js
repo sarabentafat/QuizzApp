@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Menu from "./components/Menu";
+import Quiz from "./components/Quiz";
+import EndScreen from "./components/EndScreen";
+import { useState } from "react";
+import { GameStateContext } from "./helpers/Contexts";
+import { Auth } from "./components/Auth";
+import { Welcome } from "./components/Welcome";
+import Winners from "./components/Winners";
+// ['menu', 'playing', 'finished']
 function App() {
+  const [gameState, setGameState] = useState("menu");
+  const [userName, setUserName] = useState("");
+  const [score, setScore] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App bg-black text-white">
+      <h1>Card App</h1>
+      <GameStateContext.Provider
+        value={{
+          gameState,
+          setGameState,
+          userName,
+          setUserName,
+          score,
+          setScore,
+        }}
+      >
+        {gameState === "menu" && <Menu />}
+        {gameState == "welcome" && <Welcome />}
+        {gameState === "auth" && <Auth />}
+        {gameState === "playing" && <Quiz />}
+        {gameState === "finished" && <EndScreen />}
+        {gameState === "winners" && <Winners />}
+      </GameStateContext.Provider>
+      {/* <Winners/> */}
     </div>
   );
 }
