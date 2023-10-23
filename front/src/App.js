@@ -7,34 +7,46 @@ import { GameStateContext } from "./helpers/Contexts";
 import { Auth } from "./components/Auth";
 import { Welcome } from "./components/Welcome";
 import Winners from "./components/Winners";
-// ['menu', 'playing', 'finished']
+import { Browser } from "./components/Browser";
+import {
+  BrowserView,
+  MobileView,
+} from "react-device-detect";
 function App() {
   const [gameState, setGameState] = useState("menu");
   const [userName, setUserName] = useState("");
   const [score, setScore] = useState(0);
 
   return (
-    <div className="App bg-black text-white">
-      <h1>Card App</h1>
-      <GameStateContext.Provider
-        value={{
-          gameState,
-          setGameState,
-          userName,
-          setUserName,
-          score,
-          setScore,
-        }}
-      >
-        {gameState === "menu" && <Menu />}
-        {gameState == "welcome" && <Welcome />}
-        {gameState === "auth" && <Auth />}
-        {gameState === "playing" && <Quiz />}
-        {gameState === "finished" && <EndScreen />}
-        {gameState === "winners" && <Winners />}
-      </GameStateContext.Provider>
-      {/* <Winners/> */}
-    </div>
+    <>
+      <MobileView>
+        <div className="flex text-white justify-center w-[100%]">
+          <div className="App w-[100%] max-w-[600px] relative bg-black flex flex-col h-[100vh]">
+            <GameStateContext.Provider
+              value={{
+                gameState,
+                setGameState,
+                userName,
+                setUserName,
+                score,
+                setScore,
+              }}
+            >
+              {gameState === "menu" && <Menu />}
+              {gameState === "welcome" && <Welcome />}
+              {gameState === "auth" && <Auth />}
+              {gameState === "playing" && <Quiz />}
+              {gameState === "finished" && <EndScreen />}
+              {gameState === "winners" && <Winners />}
+            </GameStateContext.Provider>
+      
+          </div>
+        </div>
+      </MobileView>
+      <BrowserView>
+        <Browser/>
+      </BrowserView>
+    </>
   );
 }
 

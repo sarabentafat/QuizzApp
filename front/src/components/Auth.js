@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { GameStateContext } from "../helpers/Contexts";
 import { getDatabase, ref, set, get } from "firebase/database";
 import { getStorage, ref as storageRef, listAll } from "firebase/storage";
-
+import login from "../images/loginright.svg";
+import GoogleIcon from "../parts/googleicon.svg";
 export const Auth = () => {
   const { setGameState } = useContext(GameStateContext);
   const [maleUsers, setMaleUsers] = useState(0);
@@ -171,20 +172,63 @@ export const Auth = () => {
   }, [selectedGender,transitionTimeout]);
 
   return (
-    <div>
-      <div>
-        <h1>Google Authentication</h1>
-        <button
-          className="bg-white text-green-700 font-bold p-1"
-          onClick={signInWithGoogle}
-          disabled={!enableSignIn}
-        >
-          Sign in with Google
-        </button>
+    // <div>
+    //   <div>
+    //     <h1>Google Authentication</h1>
+    //     <button
+    //       className="bg-white text-green-700 font-bold p-1"
+    //       onClick={signInWithGoogle}
+    //       disabled={!enableSignIn}
+    //     >
+    //       Sign in with Google
+    //     </button>
+    //   </div>
+    //   <div>
+    //     <h3>Select Gender:</h3>
+    //     <div>
+    //       <input
+    //         type="radio"
+    //         id="male"
+    //         name="gender"
+    //         value="Male"
+    //         checked={selectedGender === "Male"}
+    //         onChange={handleGenderChange}
+    //       />
+    //       <label htmlFor="male">Male</label>
+    //     </div>
+    //     <div>
+    //       <input
+    //         type="radio"
+    //         id="female"
+    //         name="gender"
+    //         value="Female"
+    //         checked={selectedGender === "Female"}
+    //         onChange={handleGenderChange}
+    //       />
+    //       <label htmlFor="female">Female</label>
+    //     </div>
+    //     <p>Selected Gender: {selectedGender}</p>
+    //   </div>
+    //   <p>Male Users: {maleUsers}</p>
+    //   <p>Female Users: {femaleUsers}</p>
+    // </div>
+    <div className={`bg-login bg-cover  bg-no-repeat w-[100%] h-[100%]`}>
+      <div className="flex justify-center items-center- w-[100%] ">
+        <img src={login} alt="" className="w-[200px] mt-[35%]" />
       </div>
       <div>
-        <h3>Select Gender:</h3>
-        <div>
+        <button
+          onClick={signInWithGoogle}
+          disabled={!enableSignIn}
+          className="flex w-[70%] rounded-2xl bg-white px-7 text-black py-3 gap-3 mx-auto  mt-6"
+        >
+          <img src={GoogleIcon} alt="googleIcon" />
+          <span className="font-thin"></span>Log with google
+        </button>
+      </div>
+      <div className="flex flex-col text-white text-xl ml-[20%] mt-10 mb-4">
+        <h3 className="text-white font-bold">Select Gender:</h3>
+        <div className="flex gap-3">
           <input
             type="radio"
             id="male"
@@ -195,7 +239,7 @@ export const Auth = () => {
           />
           <label htmlFor="male">Male</label>
         </div>
-        <div>
+        <div className="flex gap-3">
           <input
             type="radio"
             id="female"
@@ -206,10 +250,7 @@ export const Auth = () => {
           />
           <label htmlFor="female">Female</label>
         </div>
-        <p>Selected Gender: {selectedGender}</p>
       </div>
-      <p>Male Users: {maleUsers}</p>
-      <p>Female Users: {femaleUsers}</p>
     </div>
   );
 };

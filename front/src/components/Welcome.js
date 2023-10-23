@@ -7,7 +7,10 @@ import {
   ref as storageRef,
   getDownloadURL,
 } from "firebase/storage";
-
+// import { Model } from "./Model";
+import part1 from "../parts/part1.svg";
+import part2 from "../parts/part2.svg";
+import part3 from "../parts/part3.svg";
 export const Welcome = () => {
   const { setGameState } = useContext(GameStateContext);
   const [pocketCard, setPocketCard] = useState("");
@@ -66,24 +69,44 @@ export const Welcome = () => {
   }, []);
 
   return (
-    <div>
-      Welcome
-      <div>
-        <h2>Your Pocket Card:</h2>
-        <button onClick={handleShowImage}>Show Image</button>
+    <>
+
+      <div className="flex justify-between mt-20 items-center">
+        <button
+          className="bg-white text-black h-fit py-2 px-3 text-xl font-bold rounded-xl ml-4"
+          onClick={handleShowImage}
+        >
+          My card
+        </button>
         {showImage && (
           <img style={{ width: "150px" }} src={pocketCard} alt="Pocket Card" />
         )}
       </div>
-      <div>
-        <h1>How to play?</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-          vulputate libero et velit interdum, ac aliquet odio mattis. Class
-          aptent taciti sociosqu
-        </p>
+      <div className="w-[100%] flex items-start gap-3">
+        <img src={part2} alt="" srcset="" />
+        <div className="text-white w-[70%] text-start mt-2 flex flex-col gap-5">
+          <h2 className="text-5xl font-bold">Welcome </h2>
+          <div className="flex flex-col gap-1">
+            <h4 className="text-2xl">How to play</h4>
+            <p style={{ color: "#BABABA" }} className="text-xl px-3">
+              Worem ipsum dolor sit amet, consectetur adipiscing elit Lorem
+              ipsum dolor sit amet consectetur adipisicing elit. Soluta eaque
+              vero dolorem ex, rem ullam doloribus nihil .
+            </p>
+          </div>
+        </div>
       </div>
-      <button onClick={startGame}>Play</button>
-    </div>
+      <div className="absolute bottom-0">
+        <img src={part3} alt="" srcset="" className="left-0" />
+      </div>
+      <button
+        style={{ backgroundColor: "red" }}
+        className=" text-white right-[10%] absolute bottom-[10%] rounded-3xl text-xl py-3 px-16 uppercase"
+        onClick={startGame}
+      >
+        play
+      </button>
+
+    </>
   );
 };

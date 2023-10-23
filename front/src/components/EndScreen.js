@@ -5,7 +5,8 @@ import { useContext } from "react";
 import { GameStateContext } from "../helpers/Contexts";
 import { Questions } from "../helpers/Questions";
 import { auth } from "../config/firebase";
-
+import Carts from "../images/thanksCarte.svg"
+import thanku from "../images/thanku.svg"
 const EndScreen = () => {
   const { score, setScore, setGameState } = useContext(GameStateContext);
   const [userName, setUserName] = useState("");
@@ -46,7 +47,7 @@ const EndScreen = () => {
     // Delay the transition to the "Winners" state after 3000 milliseconds (3 seconds)
     const transitionTimeout = setTimeout(() => {
       setGameState("winners");
-    }, 3000);
+    }, 10000);
 
     // Clear the timeout when the component unmounts to prevent memory leaks
     return () => {
@@ -60,16 +61,30 @@ const EndScreen = () => {
   };
 
   return (
-    <div className="EndScreen">
-      <h1>Quiz Finished</h1>
-      {userImage && <img src={userImage} alt="User" />}
-      <h3>THANK YOU {userName} FOR PARTICIPATING</h3>
-      <p>Wait a few seconds to know the winners</p>
-      <h1>
+
+      <>
+        <div className="EndScreen flex h-[50%] items-center">
+          <img src={Carts} alt="thank u cart" className="m-auto" />
+        </div>
+        {/* {userImage && <img src={userImage} alt="User" />} */}
+        <div className="text-white text-3xl font-bold text-center">
+          <h1>THANK YOU</h1>
+          <h1>FOR</h1>
+          <h1>PARTICIPATING</h1>
+        </div>
+        <div className="text-gray-500 text-sm text-center mt-6">
+          <p>wait a few seconds to know the winners</p>
+        </div>
+        <div className="flex items-center justify-center mt-8">
+          <img className="text-center" src={thanku} />
+        </div>
+
+        {/* <h1>
         Score: {score} / {Questions.length}
       </h1>
-      <button onClick={restartQuiz}>Restart Quiz</button>
-    </div>
+      <button onClick={restartQuiz}>Restart Quiz</button> */}
+      </>
+ 
   );
 };
 
