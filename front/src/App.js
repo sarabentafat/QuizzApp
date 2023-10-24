@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <MobileView>
-        <div className="flex text-white justify-center w-[100%]">
+        <div className="flex font-serif text-white justify-center w-[100%]">
           <div className="App w-[100%] max-w-[600px] relative bg-black flex flex-col h-[100vh]">
             <GameStateContext.Provider
               value={{

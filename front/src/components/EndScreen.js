@@ -3,7 +3,6 @@ import { getDatabase, ref, get, update } from "firebase/database";
 import { serverTimestamp } from "firebase/database";
 import { useContext } from "react";
 import { GameStateContext } from "../helpers/Contexts";
-import { Questions } from "../helpers/Questions";
 import { auth } from "../config/firebase";
 import Carts from "../images/thanksCarte.svg"
 import thanku from "../images/thanku.svg"

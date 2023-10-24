@@ -1,11 +1,12 @@
 import { auth } from "../config/firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { GameStateContext } from "../helpers/Contexts";
 import { getDatabase, ref, set, get } from "firebase/database";
 import { getStorage, ref as storageRef, listAll } from "firebase/storage";
 import login from "../images/loginright.svg";
 import GoogleIcon from "../parts/googleicon.svg";
+
 export const Auth = () => {
   const { setGameState } = useContext(GameStateContext);
   const [maleUsers, setMaleUsers] = useState(0);
@@ -56,6 +57,7 @@ export const Auth = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
       console.log(`User signed in: ${user.displayName}`);
       const storage = getStorage();
       const imagesRef = storageRef(storage, "pockets_images");
@@ -65,7 +67,13 @@ export const Auth = () => {
       const db = getDatabase();
       const userRef = ref(db, `users/${user.uid}`);
       const snapshot = await get(userRef);
+      // Store authentication status in local storage
+      localStorage.setItem("isAuthenticated", "true");
 
+      setUserCounter(userCounter + 1);
+      countMaleUsers();
+      countFemaleUsers();
+      setGameState("welcome");
       if (snapshot.exists() && snapshot.val().played) {
         setGameState("finished");
       } else {
@@ -161,58 +169,25 @@ export const Auth = () => {
   };
 
   useEffect(() => {
+    // Check if the user is already authenticated
+    const isUserAuthenticated = localStorage.getItem("isAuthenticated");
+
+    if (isUserAuthenticated) {
+      setGameState("welcome"); // Redirect to welcome page
+    }
+
     setUserCounter(0);
     countMaleUsers();
     countFemaleUsers();
-        return () => {
-          if (transitionTimeout) {
-            clearTimeout(transitionTimeout);
-          }
-        };
+    return () => {
+      if (transitionTimeout) {
+        clearTimeout(transitionTimeout);
+      }
+    };
   }, [selectedGender,transitionTimeout]);
 
   return (
-    // <div>
-    //   <div>
-    //     <h1>Google Authentication</h1>
-    //     <button
-    //       className="bg-white text-green-700 font-bold p-1"
-    //       onClick={signInWithGoogle}
-    //       disabled={!enableSignIn}
-    //     >
-    //       Sign in with Google
-    //     </button>
-    //   </div>
-    //   <div>
-    //     <h3>Select Gender:</h3>
-    //     <div>
-    //       <input
-    //         type="radio"
-    //         id="male"
-    //         name="gender"
-    //         value="Male"
-    //         checked={selectedGender === "Male"}
-    //         onChange={handleGenderChange}
-    //       />
-    //       <label htmlFor="male">Male</label>
-    //     </div>
-    //     <div>
-    //       <input
-    //         type="radio"
-    //         id="female"
-    //         name="gender"
-    //         value="Female"
-    //         checked={selectedGender === "Female"}
-    //         onChange={handleGenderChange}
-    //       />
-    //       <label htmlFor="female">Female</label>
-    //     </div>
-    //     <p>Selected Gender: {selectedGender}</p>
-    //   </div>
-    //   <p>Male Users: {maleUsers}</p>
-    //   <p>Female Users: {femaleUsers}</p>
-    // </div>
-    <div className={`bg-login bg-cover  bg-no-repeat w-[100%] h-[100%]`}>
+    <div>
       <div className="flex justify-center items-center- w-[100%] ">
         <img src={login} alt="" className="w-[200px] mt-[35%]" />
       </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import crown from "../images/crown.svg"
-import resultCard from "../images/resultsCard.svg";
 import Heart from "../images/Heart.svg"
 import carts from '../images/carts.svg'
 import trafel1 from "../images/trefle1.svg"
